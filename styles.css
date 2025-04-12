@@ -6,15 +6,15 @@
 }
 
 body {
-    background-color: #0a192f;
-    color: #e6f1ff;
+    background-color: #000000;
+    color: #ffffff;
     padding: 2rem;
     min-height: 100vh;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .parallax-bg {
@@ -24,9 +24,9 @@ body {
     width: 100%;
     height: 100%;
     background: 
-        radial-gradient(circle at 20% 20%, rgba(100, 255, 218, 0.1) 0%, transparent 20%),
-        radial-gradient(circle at 80% 80%, rgba(100, 255, 218, 0.1) 0%, transparent 20%),
-        radial-gradient(circle at 50% 50%, rgba(100, 255, 218, 0.05) 0%, transparent 30%);
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 30%);
     z-index: -1;
     transform: translateZ(-1px);
     overflow: hidden;
@@ -44,7 +44,7 @@ body {
 .ball {
     position: absolute;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(100, 255, 218, 0.3) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
     filter: blur(1px);
     transition: transform 0.1s ease-out;
     pointer-events: none;
@@ -54,24 +54,26 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
+    flex-direction: column;
     gap: 2rem;
     position: relative;
     z-index: 1;
 }
 
 .profile-section {
-    width: 300px;
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    gap: 1rem;
+    justify-content: flex-start;
+    gap: 2rem;
 }
 
 .profile-photo {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
-    border: 2px solid #64ffda;
+    border: 2px solid #ffffff;
     filter: grayscale(100%);
 }
 
@@ -81,25 +83,25 @@ body {
 }
 
 .social-link {
-    color: #64ffda;
+    color: #ffffff;
     font-size: 2rem;
     transition: color 0.3s;
 }
 
 .social-link:hover {
-    color: #8892b0;
+    color: #888888;
 }
 
 .repositories {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
 }
 
 .repo-card {
-    background-color: #112240;
-    border: 1px solid #233554;
+    background-color: #111111;
+    border: 1px solid #333333;
     border-radius: 6px;
     padding: 1.5rem;
     transition: transform 0.3s, border-color 0.3s;
@@ -109,16 +111,16 @@ body {
 
 .repo-card:hover {
     transform: translateY(-5px);
-    border-color: #64ffda;
+    border-color: #ffffff;
 }
 
 .repo-card h3 {
-    color: #64ffda;
+    color: #ffffff;
     margin-bottom: 0.5rem;
 }
 
 .repo-card p {
-    color: #8892b0;
+    color: #888888;
     margin-bottom: 1rem;
 }
 
@@ -128,7 +130,7 @@ body {
     align-items: center;
     margin-top: 1rem;
     font-size: 0.875rem;
-    color: #8892b0;
+    color: #888888;
 }
 
 .language {
@@ -182,16 +184,91 @@ body {
     background-color: #1d2d50;
 }
 
+.info-section {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.info-card {
+    background-color: #111111;
+    border: 1px solid #333333;
+    border-radius: 6px;
+    padding: 1.5rem;
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    border-color: #ffffff;
+}
+
+.info-card h3 {
+    color: #ffffff;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.info-card p {
+    color: #888888;
+    line-height: 1.6;
+}
+
+.tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tech-item {
+    background-color: #333333;
+    color: #ffffff;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+}
+
+.about-me {
+    grid-column: 1 / -1;
+}
+
 @media (max-width: 768px) {
+    body {
+        padding: 1rem;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
     .container {
         flex-direction: column;
+        width: 100%;
+        padding-bottom: 2rem;
     }
     
     .profile-section {
-        width: 100%;
+        flex-direction: column;
+        align-items: center;
     }
     
     .repositories {
         grid-template-columns: 1fr;
+    }
+
+    .about-content {
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+    .info-section {
+        grid-template-columns: 1fr;
+    }
+    
+    .info-card {
+        width: 100%;
     }
 } 

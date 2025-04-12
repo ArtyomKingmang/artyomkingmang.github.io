@@ -3,24 +3,24 @@ class Neuron {
         this.x = x;
         this.y = y;
         this.connections = [];
+        this.activation = 0;
         this.pulse = 0;
     }
 
-    connect(neuron) {
-        this.connections.push(neuron);
-    }
-
-    update() {
-        this.pulse = Math.max(0, this.pulse - 0.05);
+    connect(other) {
+        this.connections.push(other);
     }
 
     activate() {
+        this.activation = 1;
         this.pulse = 1;
-        this.connections.forEach(neuron => {
-            if (Math.random() < 0.3) {
-                neuron.activate();
-            }
-        });
+    }
+
+    update() {
+        if (this.activation > 0) {
+            this.activation -= 0.05;
+            this.pulse = this.activation;
+        }
     }
 }
 
@@ -36,7 +36,7 @@ class NeuralNetwork {
         window.addEventListener('resize', () => this.resize());
 
         this.createNeurons();
-        this.connectNeurons();
+        this.createConnections();
         this.animate();
     }
 
@@ -46,62 +46,57 @@ class NeuralNetwork {
     }
 
     createNeurons() {
-        const numNeurons = 20;
-        for (let i = 0; i < numNeurons; i++) {
+        for (let i = 0; i < 20; i++) {
             const x = Math.random() * this.canvas.width;
             const y = Math.random() * this.canvas.height;
             this.neurons.push(new Neuron(x, y));
         }
     }
 
-    connectNeurons() {
-        this.neurons.forEach(neuron => {
-            const numConnections = Math.floor(Math.random() * 3) + 2;
-            for (let i = 0; i < numConnections; i++) {
-                const randomNeuron = this.neurons[Math.floor(Math.random() * this.neurons.length)];
-                if (randomNeuron !== neuron) {
-                    neuron.connect(randomNeuron);
+    createConnections() {
+        for (let i = 0; i < this.neurons.length; i++) {
+            for (let j = i + 1; j < this.neurons.length; j++) {
+                if (Math.random() < 0.3) {
+                    this.neurons[i].connect(this.neurons[j]);
+                    this.neurons[j].connect(this.neurons[i]);
                 }
             }
-        });
+        }
     }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.strokeStyle = 'rgba(100, 255, 218, 0.1)';
+        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.02)';
         this.ctx.lineWidth = 1;
 
-        this.neurons.forEach(neuron => {
-            neuron.connections.forEach(target => {
+        for (const neuron of this.neurons) {
+            for (const connection of neuron.connections) {
                 this.ctx.beginPath();
                 this.ctx.moveTo(neuron.x, neuron.y);
-                this.ctx.lineTo(target.x, target.y);
+                this.ctx.lineTo(connection.x, connection.y);
                 this.ctx.stroke();
-            });
-        });
+            }
+        }
 
-        this.neurons.forEach(neuron => {
+        for (const neuron of this.neurons) {
             this.ctx.beginPath();
-            this.ctx.arc(neuron.x, neuron.y, 3, 0, Math.PI * 2);
-            this.ctx.fillStyle = `rgba(100, 255, 218, ${neuron.pulse})`;
+            this.ctx.arc(neuron.x, neuron.y, 2, 0, Math.PI * 2);
+            this.ctx.fillStyle = `rgba(255, 255, 255, ${neuron.pulse * 0.5})`;
             this.ctx.fill();
-        });
+        }
     }
 
     animate() {
-        this.neurons.forEach(neuron => neuron.update());
-        
-
+        this.draw();
+        for (const neuron of this.neurons) {
+            neuron.update();
+        }
         if (Math.random() < 0.02) {
             const randomNeuron = this.neurons[Math.floor(Math.random() * this.neurons.length)];
             randomNeuron.activate();
         }
-
-        this.draw();
         requestAnimationFrame(() => this.animate());
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    new NeuralNetwork();
-}); 
+new NeuralNetwork(); 

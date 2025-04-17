@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Примеры кода на языке D</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #C0C0C0;
+            font-family: "Courier New", monospace;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.2;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #000000;
+            padding: 20px;
+            border: 2px solid #C0C0C0;
+        }
+        h1 {
+            color: #FFFFFF;
+            text-align: center;
+            border-bottom: 2px solid #C0C0C0;
+            padding-bottom: 10px;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .menu {
+            background-color: #000000;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #C0C0C0;
+            display: flex;
+            justify-content: space-between;
+        }
+        .menu a {
+            color: #C0C0C0;
+            text-decoration: none;
+            padding: 2px 5px;
+        }
+        .menu a:hover {
+            background-color: #C0C0C0;
+            color: #000000;
+        }
+        .code-section {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #C0C0C0;
+        }
+        .code-title {
+            color: #FFFFFF;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .code-description {
+            margin-bottom: 10px;
+            color: #C0C0C0;
+        }
+        .code-block {
+            background-color: #1E1E1E;
+            padding: 10px;
+            border: 1px solid #333;
+            font-family: "Courier New", monospace;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .code-comment {
+            color: #6A9955;
+        }
+        .code-keyword {
+            color: #569CD6;
+        }
+        .code-string {
+            color: #CE9178;
+        }
+        .code-number {
+            color: #B5CEA8;
+        }
+        .code-function {
+            color: #DCDCAA;
+        }
+        .code-type {
+            color: #4EC9B0;
+        }
+        @media (min-width: 768px) {
+            .container {
+                width: 80%;
+            }
+        }
+        @media (min-width: 1200px) {
+            .container {
+                width: 70%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Примеры кода на D</h1>
+        
+        <div class="menu">
+            <a href="index.html">Главная</a>
+            <a href="news.html">Новости</a>
+            <a href="code.html">Примеры кода</a>
+            <a href="contact.html">Контакты</a>
+        </div>
+
+        <div class="code-section">
+            <div class="code-title">Базовый пример: Hello World</div>
+            <div class="code-description">
+                Простейшая программа на D, выводящая текст в консоль.
+            </div>
+            <div class="code-block">
+<span class="code-keyword">import</span> std.stdio;
+
+<span class="code-keyword">void</span> <span class="code-function">main</span>() {
+    <span class="code-function">writeln</span>(<span class="code-string">"Hello, World!"</span>);
+}
+            </div>
+        </div>
+
+        <div class="code-section">
+            <div class="code-title">Шаблоны и обобщенное программирование</div>
+            <div class="code-description">
+                Пример использования шаблонов для создания обобщенной функции.
+            </div>
+            <div class="code-block">
+<span class="code-keyword">import</span> std.stdio;
+
+<span class="code-comment">// Функция с шаблонным параметром</span>
+<span class="code-keyword">auto</span> <span class="code-function">sum</span>(T)(T[] arr) {
+    T result = <span class="code-number">0</span>;
+    <span class="code-keyword">foreach</span> (x; arr) {
+        result += x;
+    }
+    <span class="code-keyword">return</span> result;
+}
+
+<span class="code-keyword">void</span> <span class="code-function">main</span>() {
+    <span class="code-keyword">int</span>[] numbers = [<span class="code-number">1</span>, <span class="code-number">2</span>, <span class="code-number">3</span>, <span class="code-number">4</span>, <span class="code-number">5</span>];
+    <span class="code-function">writeln</span>(<span class="code-string">"Сумма: "</span>, <span class="code-function">sum</span>(numbers));
+}
+            </div>
+        </div>
+
+        <div class="code-section">
+            <div class="code-title">Метапрограммирование: CTFE</div>
+            <div class="code-description">
+                Пример использования Compile-Time Function Execution (CTFE) для вычисления факториала во время компиляции.
+            </div>
+            <div class="code-block">
+<span class="code-keyword">import</span> std.stdio;
+
+<span class="code-comment">// Функция вычисления факториала</span>
+<span class="code-keyword">auto</span> <span class="code-function">factorial</span>(<span class="code-keyword">int</span> n) {
+    <span class="code-keyword">if</span> (n == <span class="code-number">0</span>) <span class="code-keyword">return</span> <span class="code-number">1</span>;
+    <span class="code-keyword">return</span> n * <span class="code-function">factorial</span>(n - <span class="code-number">1</span>);
+}
+
+<span class="code-keyword">void</span> <span class="code-function">main</span>() {
+    <span class="code-comment">// Вычисление во время компиляции</span>
+    <span class="code-keyword">enum</span> fact5 = <span class="code-function">factorial</span>(<span class="code-number">5</span>);
+    <span class="code-function">writeln</span>(<span class="code-string">"5! = "</span>, fact5);
+}
+            </div>
+        </div>
+
+        
+    </div>
+</body>
+</html> 
